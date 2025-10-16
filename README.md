@@ -178,3 +178,6 @@ The service returns appropriate HTTP status codes:
 - `400` - Invalid request or insufficient audio
 - `401` - Unauthorized (invalid API key)
 - `500` - Server error (pyglue/ElevenLabs failure)
+
+## Auto-Deploy Enabled
+This repository is configured to automatically deploy to Cloud Run on every push to main branch.
