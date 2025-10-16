@@ -181,3 +181,4 @@ The service returns appropriate HTTP status codes:
 
 ## Auto-Deploy Enabled
 This repository is configured to automatically deploy to Cloud Run on every push to main branch.
+# Permissions updated
