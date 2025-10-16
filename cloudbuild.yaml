@@ -1,0 +1,34 @@
+steps:
+  # Build the container image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/voice-cloning-orchestrator', '.']
+
+  # Push the container image to Container Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/voice-cloning-orchestrator']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'voice-cloning-orchestrator'
+      - '--image'
+      - 'gcr.io/$PROJECT_ID/voice-cloning-orchestrator'
+      - '--region'
+      - 'us-central1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--memory'
+      - '512Mi'
+      - '--timeout'
+      - '300s'
+      - '--concurrency'
+      - '10'
+      - '--set-env-vars'
+      - 'GCP_BUCKET_NAME=memorial-voices,PYGLUE_URL=https://pyglue-48354017394.us-central1.run.app,API_KEY=521fd972b6c81f8aa3f8257983b9fe136887a3a85f9de173455c327df91b7c3b,PYGLUE_API_KEY=d948fe221acccfc86969a3db3c925166c1361436c04327ddbde8204d61f7498e,ELEVENLABS_API_KEY=sk_536c1dd1a072eecebad234bbc5995354e8e260c3ea72187b'
+
+images:
+  - 'gcr.io/$PROJECT_ID/voice-cloning-orchestrator'
